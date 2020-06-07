@@ -159,8 +159,8 @@ end
 
 ----------------------------------------------------------------------------------
 local jsfx={} --store details of helper effect
-jsfx.name="tenfour-MIDIChordState"
-jsfx.fn="tenfour-MIDIChordState"-- filename
+jsfx.name="ReaperTon-MIDIChordState"
+jsfx.fn="ReaperTon-MIDIChordState"-- filename
 jsfx.paramIndex_Active = 0
 jsfx.paramIndex_NotesInBuffer = 1
 jsfx.paramIndex_NoteQueryIndex = 2
@@ -168,7 +168,7 @@ jsfx.paramIndex_NoteValue = 3
 jsfx.paramIndex_Channel = 4
 jsfx.paramIndex_Velocity = 5
 jsfx.body=[[
-desc:tenfour-MIDIChordState
+desc:ReaperTon-MIDIChordState
 
 slider1:0<0,1,1{On,Off}>Active (eats notes)
 slider2:0<0,127,1>Notes in buffer
