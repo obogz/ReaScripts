@@ -18,3 +18,5 @@ TODO:
 
 Long term:
 - create an jsfx extension that improves on this
+
+Know issue: any new pressed note with the same velocity and pitch as the note at the cursor will not be considered a new note and will result in extending the previous note. This rearly happnes if you use a keyboard with variable velocity.
