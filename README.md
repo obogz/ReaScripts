@@ -17,4 +17,4 @@ TODO:
 - cleanup, cleanup some more, optimise, organise and add integration with ReaPack
 
 Long term:
-- create an jsfx extension that improves this
+- create an jsfx extension that improves on this
