@@ -29,6 +29,7 @@ If you think this is worth a beer or two :D
 https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4Y37AMBHYCWQ8
 
 I build this script mainly for my own confot, but as I find ways to improve my flow I'll add them in the folowing section
+
 Tips and tricks:
 - Map actions to a midi foot controller so you can play with both hands
 - Map tripplet toggle action to a key or foot controller
