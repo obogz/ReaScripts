@@ -1,7 +1,7 @@
 
 ----------------------------------------------------------------------------------
 function DBG(str)
- --reaper.ShowConsoleMsg(str.."\n")
+ -- reaper.ShowConsoleMsg(str.."\n")
 end
 
 
@@ -497,6 +497,9 @@ end
 
 function insertOrModifyHeldNotesByGrid(gridSteps)
 	local take, track, noteIndices, oldDurationPPQ, cursorTime, cursorPPQ = getNotesEndingAtCursor()
+
+	local item = reaper.GetMediaItemTake_Item(take)
+	reaper.MarkTrackItemsDirty(track, item)
 
 	local startTime = reaper.GetCursorPosition()
 	local heldPitches = getHeldNotes(track)
