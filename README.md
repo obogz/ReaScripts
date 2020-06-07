@@ -10,8 +10,8 @@ This project was started using this work: https://github.com/thenfour/ReaperScri
 
 
 TODO: 
-- Make undo work properly
-- Make back action work properly (delete if note is too small)
+- Make undo work
+- Fix overlaping notes (here I need to think about what solution would be best
 - optimise and cleanup the code
 - see if there is another way to detect retriggerd notes besides comparing velocity
 - cleanup, cleanup some more, optimise, organise and add integration with ReaPack
