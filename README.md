@@ -34,7 +34,8 @@ Tips and tricks:
 - Map actions to a midi foot controller so you can play with both hands
 - Map tripplet toggle action to a key or foot controller
 - Map grid change action(s) or use a confortable grid size
-- To delete certain move at the end of the note(s) and hold the coresponding key on your controller and press back untill you fully delted
+- To delete specific notes move at the end of the note(s) and hold the coresponding key on your controller and press back untill you fully delted
+- While you go back you are in delete mode (held keys will start deleting as the cursor moves backward)
 - To resize a certain note do the same
 - if no notes are pressed the cursor will just navigate back and forward
 - I successfully tested this using the arrow keys
