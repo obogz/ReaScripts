@@ -12,9 +12,8 @@ This project was started using this work: https://github.com/thenfour/ReaperScri
 TODO: 
 - Fix overlaping notes (here I need to think about what solution would be best
 - add a full backspace mode where you delete using the cursor
-- optimise and cleanup the code
 - see if there is another way to detect retriggerd notes besides comparing velocity
-- cleanup, cleanup some more, optimise, organise and add integration with ReaPack
+- cleanup, optimise, organise and add integration with ReaPack
 
 Long term:
 - create an jsfx extension that improves on this
