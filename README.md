@@ -22,4 +22,4 @@ Long term:
 Know issue: any new pressed note with the same velocity and pitch as the note at the cursor will not be considered a new note and will result in extending the previous note. This rearly happnes if you use a keyboard with variable velocity.
 
 
-Beer and coffee money :D https://tinyurl.com/ya693owc
+If you think this is worth a beer or two :D https://tinyurl.com/ya693owc
