@@ -23,6 +23,7 @@ TODO:
 
 Long term:
 - create an jsfx extension that improves on this
+- the purpose of the script is to streamline and optimise midi input as much as possilbe 
 - main vision is to be able to use only a footcontroller and a midi keyboard, no mouse no keyboard
   + if at begining of a note, hold it to move it in the grid back or forward (maybe here add separate actions)
   + move held note up or down an octave (cursor must be on the note or at it's edges)
