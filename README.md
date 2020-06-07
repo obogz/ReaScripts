@@ -1,7 +1,7 @@
 # ReaperTonMidiRoll
 Ableton like midi editor step input actions for Reaper
 
-THIS VERSION IS pre-BETA, some big known bugs exists 
+THIS VERSION IS pre-BETA, some known bugs aren't yet fixed, some functionality might be added 
 
 To install, copy the scripts to the reaper script directory and add them in your Midi Editor actions.
 To use make sure you have the normal step recording option turned off!
@@ -12,6 +12,7 @@ This project was started using this work: https://github.com/thenfour/ReaperScri
 TODO: 
 - Make undo work
 - Fix overlaping notes (here I need to think about what solution would be best
+- add a full backspace mode where you delte using the cursor
 - optimise and cleanup the code
 - see if there is another way to detect retriggerd notes besides comparing velocity
 - cleanup, cleanup some more, optimise, organise and add integration with ReaPack
