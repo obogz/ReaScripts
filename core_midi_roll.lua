@@ -527,15 +527,20 @@ function insertOrModifyHeldNotesByGrid(gridSteps)
 
 		if #heldPitches > 0 then
 			for index,v in pairs(heldPitches) do
-				if (v.note == pitch) then
-					if (v.note == pitch) and (v.chan == chan) and (v.velocity == vel) then
-						DBG("Adjust notes "..noteIndices[i])
-						DBG(" P"..v.note.." C"..v.chan.." V"..v.velocity)
+				if (v.note == pitch) and (v.chan == chan) and (v.velocity == vel or gridSteps<0) then
+					DBG("Adjust notes "..noteIndices[i])
+					DBG(" P"..v.note.." C"..v.chan.." V"..v.velocity)
+					DBG("Start"..newEndPPQ.." end"..v.chan.." Sum"..newEndPPQ-startppq)
+					if(newEndPPQ-startppq > 0.02) then
 						reaper.MIDI_SetNote(take, noteIndices[i], nil, nil, nil, newEndPPQ, nil, nil, nil, nil)
-						table.remove(heldPitches, index)
-						DBG("Pitches left "..#heldPitches)
-						break
+					else
+						--each time you delete a note the indices go down....
+						reaper.MIDI_DeleteNote(take, noteIndices[i])
 					end
+
+					table.remove(heldPitches, index)
+					DBG("Pitches left "..#heldPitches)
+					break
 				end
 			end
 		end
@@ -608,6 +613,14 @@ function insertPlayingMIDINotesAtCursorByGridSize()
 	reaper.MoveEditCursor(noteEndTime - reaper.GetCursorPosition(), false)
 
 	adjustGridToCursorAndInsertedNote(reaper.MIDI_GetGrid(take))
+end
+
+function deleteHeldNotesUnderOrEndingAtCursor()
+
+end
+
+function deleteAllNotesEndingAtCursor()
+
 end
 
 
