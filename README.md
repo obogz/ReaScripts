@@ -21,7 +21,7 @@ Long term:
 - create an jsfx extension that improves on this
 - main vision is to be able to use only a footcontroller and a midi keyboard, no mouse no keyboard
   + if at begining of a note, hold it to move it in the grid back or forward (maybe here add separate actions)
-  + move held note up or down an octave (cursor must be on the note ro at it's edges)
+  + move held note up or down an octave (cursor must be on the note or at it's edges)
 
 
 
