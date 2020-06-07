@@ -1,5 +1,8 @@
 # ReaperTonMidiRoll
 Ableton like midi editor step input actions for Reaper
+DEMO Video here: 
+https://youtu.be/ZZQKqqFqgfo
+
 
 THIS VERSION IS BETA, some functionality might be added some bugs might exist, instalation migh trow exeptions if not done right (need to integrate in ReaPack)
 
