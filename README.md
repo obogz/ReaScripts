@@ -31,7 +31,7 @@ Long term:
 
 
 If you think this is worth a beer or two :D
-paypal.me/obogz
+https://paypal.me/obogz
 
 I build this script mainly for my own confot, but as I find ways to improve my flow I'll add them in the folowing section
 
