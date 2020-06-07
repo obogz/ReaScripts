@@ -1,7 +1,7 @@
 
 ----------------------------------------------------------------------------------
 function DBG(str)
-  --reaper.ShowConsoleMsg(str.."\n")
+ --reaper.ShowConsoleMsg(str.."\n")
 end
 
 
@@ -480,6 +480,21 @@ function getNotesEndingAtCursor()
 end
 
 
+function cleanNotesWithZeroLenght(track, take)
+	local ret, noteCount, _, _ = reaper.MIDI_CountEvts(take)
+
+	for i = noteCount - 1, 0, -1 do
+		local _, selected, muted, startppq, endppq, _, pitch, _ = reaper.MIDI_GetNote(take, i)
+		DBG("Cleanup "..startppq.." end "..endppq.." sum "..endppq-startppq.." pitch "..pitch)
+		if(endppq-startppq <=1) then
+			DBG("MIDI_DeleteNote "..i)
+			reaper.MIDI_DeleteNote(take, i)
+		end
+	end
+
+end
+
+
 function insertOrModifyHeldNotesByGrid(gridSteps)
 	local take, track, noteIndices, oldDurationPPQ, cursorTime, cursorPPQ = getNotesEndingAtCursor()
 
@@ -490,7 +505,7 @@ function insertOrModifyHeldNotesByGrid(gridSteps)
 	local abandon = false
 
 	-- maybe scrap this one
-	if #noteIndices < 1 then
+	if #noteIndices < 1 and gridSteps>0 then
 		DBG("no relevant notes to elongate; abandoning")
 		if gridSteps>0 then
 			insertPlayingMIDINotesAtCursorByGridSize()
@@ -520,6 +535,10 @@ function insertOrModifyHeldNotesByGrid(gridSteps)
 	local _, takeEnd = SnapToMeasure(newEndTime)
 	ensureTakePosLastsUntil(take, takeEnd)
 
+	--TODO figure out replacment and overlapping
+	--TODO figure out deletion
+
+	-- modify existing held notes
 	for i = 1, #noteIndices do
 
 
@@ -528,29 +547,24 @@ function insertOrModifyHeldNotesByGrid(gridSteps)
 		if #heldPitches > 0 then
 			for index,v in pairs(heldPitches) do
 				if (v.note == pitch) and (v.chan == chan) and (v.velocity == vel or gridSteps<0) then
-					DBG("Adjust notes "..noteIndices[i])
-					DBG(" P"..v.note.." C"..v.chan.." V"..v.velocity)
-					DBG("Start"..newEndPPQ.." end"..v.chan.." Sum"..newEndPPQ-startppq)
-					if(newEndPPQ-startppq > 0.02) then
-						reaper.MIDI_SetNote(take, noteIndices[i], nil, nil, nil, newEndPPQ, nil, nil, nil, nil)
-					else
-						--each time you delete a note the indices go down....
-						reaper.MIDI_DeleteNote(take, noteIndices[i])
-					end
-
+					reaper.MIDI_SetNote(take, noteIndices[i], nil, nil, nil, newEndPPQ, nil, nil, nil, nil)
 					table.remove(heldPitches, index)
-					DBG("Pitches left "..#heldPitches)
 					break
 				end
 			end
 		end
 	end
 
+	--cleanup aka delete all notes with very small lenght
+	cleanNotesWithZeroLenght(track, take)
+
+
+	-- insert remaining notes if advancing curosr
 	local mediaItem = reaper.GetMediaItemTake_Item(take)
 	reaper.UpdateItemInProject(mediaItem)
 	
 
-	if #heldPitches > 0 then
+	if #heldPitches > 0 and gridSteps>0 then
 		-- you're holding notes on your MIDI keyboard; add them to the take
 
 		local noteStartPPQ = startPPQ-- convert to PPQ
@@ -566,10 +580,8 @@ function insertOrModifyHeldNotesByGrid(gridSteps)
 		reaper.UpdateItemInProject(mediaItem)-- make certain the project bounds has been updated to reflect the newly recorded item
 
 	end
-
-
-
 end
+
 
 function insertPlayingMIDINotesAtCursorByGridSize()
 	local take = findExistingTake()
