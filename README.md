@@ -1,7 +1,7 @@
 # ReaperTonMidiRoll
 Ableton like midi editor step input actions for Reaper
 
-THIS VERSION IS BETA, some functionality might be added some bugs might exist
+THIS VERSION IS BETA, some functionality might be added some bugs might exist, instalation migh trow exeptions if not done right (need to integrate in ReaPack)
 
 To install, copy the scripts to the reaper script directory and add them in your Midi Editor actions.
 To use make sure you have the normal step recording option turned off!
@@ -28,7 +28,7 @@ Long term:
 If you think this is worth a beer or two :D
 https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4Y37AMBHYCWQ8
 
-
+I build this script mainly for my own confot, but as I find ways to improve my flow I'll add them in the folowing section
 Tips and tricks:
 - Map actions to a midi foot controller so you can play with both hands
 - Map tripplet toggle action to a key or foot controller
@@ -36,4 +36,5 @@ Tips and tricks:
 - To delete certain move at the end of the note(s) and hold the coresponding key on your controller and press back untill you fully delted
 - To resize a certain note do the same
 - if no notes are pressed the cursor will just navigate back and forward
+- I successfully tested this using the arrow keys
 
