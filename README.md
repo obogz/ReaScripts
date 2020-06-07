@@ -1,5 +1,5 @@
 # ReaPerTonMidiRoll
-Ableton like midi editor actions for Reaper
+Ableton like midi editor step input actions for Reaper
 THIS VERSION IS ALPHA!! Hightly unstable!!!
 
 To install, copy the scripts to the reaper script directory and add them in your Midi Edito actions.
