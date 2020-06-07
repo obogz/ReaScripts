@@ -403,7 +403,7 @@ function getHeldNotes(track)
     pitches[#pitches].note, _, _ = reaper.TrackFX_GetParam(track, iHelper, jsfx.paramIndex_NoteValue)
     pitches[#pitches].chan = reaper.TrackFX_GetParam(track, iHelper, jsfx.paramIndex_Channel)
     pitches[#pitches].velocity = reaper.TrackFX_GetParam(track, iHelper, jsfx.paramIndex_Velocity)
-    --DBG("   held note "..pitches[#pitches].note.." / vel "..pitches[#pitches].velocity)
+    DBG("   held note "..pitches[#pitches].note.." / vel "..pitches[#pitches].velocity)
   end
   return pitches
 end
@@ -449,7 +449,6 @@ function insertPlayingMIDINotesAtCursor(options)
 	reaper.UpdateItemInProject(mediaItem)-- make certain the project bounds has been updated to reflect the newly recorded item
 	reaper.MoveEditCursor(noteEndTime - reaper.GetCursorPosition(), false)
 
-	adjustGridToCursorAndInsertedNote(options.noteLengthQN)
 end
 
 
@@ -491,19 +490,14 @@ function getExistingHeldNotesInfo(catchAllIfNoneArePlaying)
 	local heldIndices = {}
 	for i = 0, noteCount - 1 do
 		local _, selected, muted, startppq, endppq, _, pitch, _ = reaper.MIDI_GetNote(take, i)
-		--DBG("note "..i.." startppq="..startppq.." endppq="..endppq.." cursorppq="..cursorPPQ.." pitch="..pitch)
-		if #pitches > 0 then
-			for _,v in pairs(pitches) do
-				if (v.note == pitch) and math.abs(endppq - cursorPPQ) < 5 then
-					heldIndices[#heldIndices + 1] = i
-					oldDurationPPQ = endppq - startppq
-				end
-			end
-		elseif catchAllIfNoneArePlaying then
-			-- you're not holding any notes, match all.
+		DBG("note "..i.." startppq="..startppq.." endppq="..endppq.." cursorppq="..cursorPPQ.." pitch="..pitch)
+		
+		if math.abs(endppq - cursorPPQ) < 5 then
+			DBG("Added note "..i.." startppq="..startppq.." endppq="..endppq.." cursorppq="..cursorPPQ.." pitch="..pitch)
 			heldIndices[#heldIndices + 1] = i
 			oldDurationPPQ = endppq - startppq
 		end
+		
 	end
 
 	return take, track, pitches, heldIndices, oldDurationPPQ, cursorTime, cursorPPQ
@@ -548,25 +542,39 @@ function getNotesStartingAtCursor(take, track)
 end
 
 
-----------------------------------------------------------------------------------
-function moveCursorByGridSizeAndAlterDurationOfHeldNotes(gridSteps)
+
+function insertOrModifyHeldNotesByGrid(gridSteps)
 	local take, track, _, heldIndices, oldDurationPPQ, cursorTime, cursorPPQ = getExistingHeldNotesInfo(true)
+
+	local startTime = reaper.GetCursorPosition()
+	local pitches = getHeldNotes(track)
 
 	local take = findExistingTake()
 
-	MoveEditCursorByGridSize(gridSteps)
+	local abandon = false
 
-
+	-- maybe scrap this one
 	if #heldIndices < 1 then
 		DBG("no relevant notes to elongate; abandoning")
+		if gridSteps>0 then
+			insertPlayingMIDINotesAtCursorByGridSize()
+		end
 		return
 	end
 
 
 	if not take then
 		-- here insert notes directly
-		DBG("can't change note duration; no available take.")
-		return
+		DBG("can't change note duration; no available take. Inserting...")
+		abandon = true
+	end
+
+
+	local startPPQ = reaper.MIDI_GetPPQPosFromProjTime(take, startTime)
+	MoveEditCursorByGridSize(gridSteps)
+
+	if abandon then
+		return 
 	end
 
 	local newEndTime = reaper.GetCursorPosition()
@@ -577,22 +585,56 @@ function moveCursorByGridSizeAndAlterDurationOfHeldNotes(gridSteps)
 	ensureTakePosLastsUntil(take, takeEnd)
 
 	for i = 1, #heldIndices do
-		reaper.MIDI_SetNote(take, heldIndices[i], nil, nil, nil, newEndPPQ, nil, nil, nil, nil)
+
+
+		local _, selected, muted, startppq, endppq, chan, pitch, vel = reaper.MIDI_GetNote(take, heldIndices[i])
+
+		if #pitches > 0 then
+			for index,v in pairs(pitches) do
+				if (v.note == pitch) then
+					if (v.note == pitch) and (v.chan == chan) and (v.velocity == vel) then
+						DBG("Adjust notes "..heldIndices[i])
+						DBG(" P"..v.note.." C"..v.chan.." V"..v.velocity)
+						reaper.MIDI_SetNote(take, heldIndices[i], nil, nil, nil, newEndPPQ, nil, nil, nil, nil)
+						table.remove(pitches, index)
+						DBG("Pitches left "..#pitches)
+						break
+					end
+				end
+			end
+		end
 	end
 
 	local mediaItem = reaper.GetMediaItemTake_Item(take)
-	reaper.UpdateItemInProject(mediaItem)-- make certain the project bounds has been updated to reflect the newly recorded item
+	reaper.UpdateItemInProject(mediaItem)
+	
+
+	if #pitches > 0 then
+		-- you're holding notes on your MIDI keyboard; add them to the take
+
+		local noteStartPPQ = startPPQ-- convert to PPQ
+		local noteEndPPQ = newEndPPQ-- convert to PPQ
+
+		-- insert them.
+		for k,v in pairs(pitches) do
+			DBG("  inserting note "..v.note.." from ["..noteStartPPQ.." -> "..noteEndPPQ.."]")
+			reaper.MIDI_InsertNote(take, true, false, noteStartPPQ, noteEndPPQ, v.chan, v.note, v.velocity)
+		end
+
+
+		reaper.UpdateItemInProject(mediaItem)-- make certain the project bounds has been updated to reflect the newly recorded item
+
+	end
+
+
+
 end
 
-function insertOrModifyHeldNotesByGrid(gridSteps)
-	local take, track, _, heldIndices, oldDurationPPQ, cursorTime, cursorPPQ = getExistingHeldNotesInfo(true)
-end
-
-function insertPlayingMIDINotesAtCursor(options)
+function insertPlayingMIDINotesAtCursorByGridSize()
 	local take = findExistingTake()
 	local noteStartTime = reaper.GetCursorPosition()
 	local noteStartQN = reaper.TimeMap2_timeToQN(0, noteStartTime)
-	local noteEndTime = reaper.TimeMap2_QNToTime(0, noteStartQN + options.noteLengthQN)
+	local noteEndTime = reaper.TimeMap2_QNToTime(0, noteStartQN + reaper.MIDI_GetGrid(take)) 
 
 	if not take then
 		-- create starting at measure end, add note len, snap to measure end.
@@ -629,12 +671,12 @@ function insertPlayingMIDINotesAtCursor(options)
 	reaper.UpdateItemInProject(mediaItem)-- make certain the project bounds has been updated to reflect the newly recorded item
 	reaper.MoveEditCursor(noteEndTime - reaper.GetCursorPosition(), false)
 
-	adjustGridToCursorAndInsertedNote(options.noteLengthQN)
+	adjustGridToCursorAndInsertedNote(reaper.MIDI_GetGrid(take))
 end
 
 ----------------------------------------------------------------------------------
 function extendPlayingMIDINotesAtCursor(options)
-	local take, track, _, heldIndices, oldDurationPPQ, cursorTime, cursorPPQ = getExistingHeldNotesInfo(true)
+	local take, track, _, heldIndices, _, cursorTime, cursorPPQ = getExistingHeldNotesInfo(true)
 
 	local take = findExistingTake()
 
