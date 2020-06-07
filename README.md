@@ -31,7 +31,7 @@ Long term:
 
 
 If you think this is worth a beer or two :D
-https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4Y37AMBHYCWQ8
+paypal.me/obogz
 
 I build this script mainly for my own confot, but as I find ways to improve my flow I'll add them in the folowing section
 
