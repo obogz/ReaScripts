@@ -3,7 +3,7 @@ Ableton like midi editor step input actions for Reaper
 
 THIS VERSION IS pre-BETA, some big known bugs exists 
 
-To install, copy the scripts to the reaper script directory and add them in your Midi Edito actions.
+To install, copy the scripts to the reaper script directory and add them in your Midi Editor actions.
 To use make sure you have the normal step recording option turned off!
 
 This project was started using this work: https://github.com/thenfour/ReaperScripts
