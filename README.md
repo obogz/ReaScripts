@@ -1,4 +1,4 @@
-# ReaPerTonMidiRoll
+# ReaperTonMidiRoll
 Ableton like midi editor step input actions for Reaper
 
 THIS VERSION IS ALPHA (aka half-assed)!! Hightly unstable!!!
