@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" commit="c5cb8cd0175e6d6578aaf38643ebf22f273366ea" name="obogz ReaperTon Step">
+<index version="1" name="obogz ReaperTon Step" commit="6755bc5aaca31b0b3ebeeb01a087c4d8c93fb278">
   <category name="ReaperTonMidiRoll">
-    <reapack name="ReaperTon StepInsertOrModifyHeldNotesByGridLeft.lua" type="script" desc="ReaperTon Step - move Cursor Right By Grid Size And Alter Duration Of Held Notes">
+    <reapack name="ReaperTon StepInsertOrModifyHeldNotesByGridLeft.lua" type="script" desc="ReaperTon Step - move Cursor Left By Grid Size And Alter Duration Of Held Notes">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
