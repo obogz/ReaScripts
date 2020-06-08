@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index version="1" commit="8384c63f1c3b33829659badb164f69602b1a4d42">
+  <category name="ReaperTonMidiRoll">
+    <reapack name="ReaperTonStepInsertOrModifyHeldNotesByGridLeft.lua" type="script" desc="ReaperTon - move Cursor Left By Grid Size And Alter Duration Of Held Notes">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 Fast midi step tool\par}
+}
+]]></description>
+        <link rel="donation">https://paypal.me/obogz</link>
+      </metadata>
+      <version name="1.0" author="obogz, thanks tenfour" time="2020-06-08T04:50:22Z">
+        <changelog><![CDATA[Initial]]></changelog>
+        <source file="core_midi_roll.lua">https://github.com/obogz/ReaperTonMidiRoll/raw/8384c63f1c3b33829659badb164f69602b1a4d42/ReaperTonMidiRoll/core_midi_roll.lua</source>
+        <source main="midi_editor">https://github.com/obogz/ReaperTonMidiRoll/raw/8384c63f1c3b33829659badb164f69602b1a4d42/ReaperTonMidiRoll/ReaperTonStepInsertOrModifyHeldNotesByGridLeft.lua</source>
+      </version>
+    </reapack>
+  </category>
+</index>
