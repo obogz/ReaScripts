@@ -1,6 +1,8 @@
 -- @noindex
+-- @description ReaperTon Midi Step Input
+-- @version 1.0
+-- @provides [nomain] .
 
-----------------------------------------------------------------------------------
 function DBG(str)
  -- reaper.ShowConsoleMsg(str.."\n")
 end
