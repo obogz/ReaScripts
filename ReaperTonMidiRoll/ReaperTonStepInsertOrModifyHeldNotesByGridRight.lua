@@ -1,5 +1,5 @@
 -- @description ReaperTon Midi Step Input
--- @version 1.0
+-- @version 1.2
 -- @author obogz, thanks tenfour
 -- @about
 -- 	Fast midi step tool.
