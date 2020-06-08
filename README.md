@@ -6,7 +6,7 @@ https://youtu.be/ZZQKqqFqgfo
 
 
 THIS VERSION IS BETA, some functionality might be added some bugs might exist, instalation migh trow exeptions if not done right (need to integrate in ReaPack)
-Testing: https://github.com/obogz/ReaScripts/raw/master/index.xml
+Testing: https://github.com/obogz/ReaperScripts/raw/master/index.xml
 
 To install, copy the scripts to the reaper script directory and add them in your Midi Editor actions.
 To use make sure you have the normal step recording option turned off!
