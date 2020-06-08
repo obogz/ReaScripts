@@ -1,6 +1,6 @@
 -- @noindex
 -- @description ReaperTon Midi Step Input
--- @version 1.0
+-- @version 1.2
 -- @provides [nomain] .
 
 function DBG(str)
