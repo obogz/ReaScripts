@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" commit="8384c63f1c3b33829659badb164f69602b1a4d42" name="ReaperTon Midi Step">
+<index version="1" commit="8384c63f1c3b33829659badb164f69602b1a4d42" name="ReaperTonMidiRoll">
   <category name="ReaperTonMidiRoll">
     <reapack name="ReaperTonStepInsertOrModifyHeldNotesByGridLeft.lua" type="script" desc="ReaperTon - move Cursor Left By Grid Size And Alter Duration Of Held Notes">
       <metadata>
